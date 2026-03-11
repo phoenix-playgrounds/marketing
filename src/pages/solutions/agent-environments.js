@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import { InnovationBar } from '../../components/SolutionsDropdown';
 
 const CpuIcon = () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" /><rect x="9" y="9" width="6" height="6" /><path d="M15 2v2" /><path d="M15 20v2" /><path d="M2 15h2" /><path d="M2 9h2" /><path d="M20 15h2" /><path d="M20 9h2" /><path d="M9 2v2" /><path d="M9 20v2" /></svg>
@@ -15,6 +16,7 @@ export default function AgentEnvironments() {
                     <p className="hero-subtitle">
                         Isolated runtime sandboxes for AI agents and autonomous workflows
                     </p>
+                    <InnovationBar score={90} size="lg" />
                 </div>
             </section>
         </Layout>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 
 const GlobeIcon = () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
@@ -40,66 +40,101 @@ const ZapIcon = () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>
 );
 
+export function InnovationBar({ score, size = 'sm' }) {
+    const isLarge = size === 'lg';
+    const barId = useMemo(() => `inno-${Math.random().toString(36).slice(2, 9)}`, []);
+
+    return (
+        <div className={`innovation-bar ${isLarge ? 'innovation-bar--lg' : ''}`}>
+            <div className="innovation-bar__labels">
+                <span className="innovation-bar__label innovation-bar__label--left">boring</span>
+                <span className="innovation-bar__label innovation-bar__label--right">innovative</span>
+            </div>
+            <div className="innovation-bar__track">
+                <div
+                    className="innovation-bar__fill"
+                    style={{ '--innovation-score': `${score}%` }}
+                />
+                <div
+                    className="innovation-bar__thumb"
+                    style={{ '--innovation-score': `${score}%` }}
+                />
+            </div>
+            <div className="innovation-bar__score">{score}</div>
+        </div>
+    );
+}
+
 const solutions = [
     {
         icon: <GlobeIcon />,
         title: 'Production Deployment',
         description: 'Deploy and run production workloads with zero-downtime updates',
         href: '/solutions/production-deployment',
+        innovationScore: 15,
     },
     {
         icon: <FlaskIcon />,
         title: 'Staging / UAT Environment',
         description: 'Spin up isolated staging environments for QA and acceptance testing',
         href: '/solutions/staging-uat',
+        innovationScore: 20,
     },
     {
         icon: <BoltIcon />,
         title: 'Phoenix / Ephemeral Environments',
         description: 'On-demand environments that spin up per branch or PR and auto-destroy',
         href: '/solutions/ephemeral-environments',
+        innovationScore: 75,
     },
     {
         icon: <PackageIcon />,
         title: 'Software Distribution',
         description: 'Package and distribute your software to customers effortlessly',
         href: '/solutions/software-distribution',
+        innovationScore: 45,
     },
     {
         icon: <CpuIcon />,
         title: 'Agent Environments',
         description: 'Isolated runtime sandboxes for AI agents and autonomous workflows',
         href: '/solutions/agent-environments',
+        innovationScore: 90,
     },
     {
         icon: <HomeIcon />,
         title: 'Self-Hosted Software Deployment',
         description: 'Give customers one-click self-hosted deployments of your product',
         href: '/solutions/self-hosted-deployment',
+        innovationScore: 55,
     },
     {
         icon: <WrenchIcon />,
         title: 'Internal Tools',
         description: 'Host internal dashboards, admin panels, and back-office tooling',
         href: '/solutions/internal-tools',
+        innovationScore: 35,
     },
     {
         icon: <GearIcon />,
         title: 'Build & Test During CI/CD',
         description: 'Spin up full-stack environments as part of your CI/CD pipeline',
         href: '/solutions/ci-cd',
+        innovationScore: 30,
     },
     {
         icon: <RadioIcon />,
         title: 'Build in Public',
         description: 'Share live progress with your audience as you build',
         href: '/solutions/build-in-public',
+        innovationScore: 65,
     },
     {
         icon: <ZapIcon />,
         title: 'Vibe Coding on Steroids',
         description: 'Supercharge your development flow with instant cloud playgrounds',
         href: '/solutions/vibe-coding',
+        innovationScore: 95,
     },
 ];
 
@@ -158,6 +193,7 @@ export default function SolutionsDropdown() {
                                 <div className="solutions-mega-content">
                                     <span className="solutions-mega-title">{solution.title}</span>
                                     <span className="solutions-mega-desc">{solution.description}</span>
+                                    <InnovationBar score={solution.innovationScore} size="sm" />
                                 </div>
                             </a>
                         ))}
